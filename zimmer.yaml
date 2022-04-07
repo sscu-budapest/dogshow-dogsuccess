@@ -1,5 +1,5 @@
 name: dogsuccess
-version: v0.0
+version: v1.0
 registry: git@github.com:sscu-budapest/dogshow-registry
 imported_projects:
   dogshowbase:
