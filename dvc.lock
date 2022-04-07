@@ -1,0 +1,170 @@
+schema: '2.0'
+stages:
+  prime-sex_matches:
+    cmd: datazimmer run-step prime-sex_matches
+    deps:
+    - path: data/dogshowbase/core/highest_comps/dog
+      md5: 137528e7e003374456fc97d22a9ddd59.dir
+      size: 8310
+      nfiles: 2
+    - path: data/dogshowbase/core/highest_comps/spot.parquet
+      md5: d747bc04d487aaa05f10656cd195f90c
+      size: 6261
+    - path: src/sex_matches.py
+      md5: 078e799ab016476d7c60b17dec4d6dad
+      size: 1290
+    outs:
+    - path: data/dogsuccess/sex_matches/prime/sex_match.parquet
+      md5: e9d079a5a1d81ed168551b17bcbd1b9c
+      size: 2698
+  bigger-success:
+    cmd: datazimmer run-step bigger-success
+    deps:
+    - path: data/dogracebase/core/complete/dog_size.parquet
+      md5: 82b3666f33a91bdd8a40a8dd55680f26
+      size: 4557
+    - path: data/dogshowbase/core/complete/competition.parquet
+      md5: 15acf27d32717fef01be82c1faf75e1c
+      size: 11680
+    - path: data/dogshowbase/core/complete/dog
+      md5: 4dbc50f960fcf40fba7e4ce2b0d7ed94.dir
+      size: 8939
+      nfiles: 2
+    - path: src/success.py
+      md5: d7692cfefd858f398554225870247157
+      size: 2920
+    params:
+      zimmer.yaml:
+        envs.prime.params.success.top_status_multiplier: 10
+    outs:
+    - path: data/dogsuccess/success/bigger/sized_dog.parquet
+      md5: 9bc7501554fd9780955fda51fbfd6eec
+      size: 2309
+    - path: data/dogsuccess/success/bigger/status.parquet
+      md5: 281d6ac40a8f9693bff5b12072c67de3
+      size: 2951
+    - path: reports/bigger/status_table.md
+      md5: b94db2fe7f4b0517eac4e7ce393b6895
+      size: 275
+  bigger-counts:
+    cmd: datazimmer run-step bigger-counts
+    deps:
+    - path: data/dogsuccess/success/bigger/sized_dog.parquet
+      md5: 9bc7501554fd9780955fda51fbfd6eec
+      size: 2309
+    - path: data/dogsuccess/success/bigger/status.parquet
+      md5: 281d6ac40a8f9693bff5b12072c67de3
+      size: 2951
+    - path: src/counts/proc.py
+      md5: 3d6d5de55c8ff45def5d433210f9f57c
+      size: 1204
+    outs:
+    - path: data/dogsuccess/counts/bigger/size_count.parquet
+      md5: 60bd71a5d821d9e1580ca5a0dee25bd8
+      size: 2302
+    - path: data/dogsuccess/counts/bigger/status_count.parquet
+      md5: 7176425780ead9991cd5ab41c756acb6
+      size: 2358
+  bigger-sex_matches:
+    cmd: datazimmer run-step bigger-sex_matches
+    deps:
+    - path: data/dogshowbase/core/complete/dog
+      md5: 4dbc50f960fcf40fba7e4ce2b0d7ed94.dir
+      size: 8939
+      nfiles: 2
+    - path: data/dogshowbase/core/complete/spot.parquet
+      md5: de8bd1126b78e8895de90abc73baab32
+      size: 9259
+    - path: src/sex_matches.py
+      md5: 078e799ab016476d7c60b17dec4d6dad
+      size: 1290
+    outs:
+    - path: data/dogsuccess/sex_matches/bigger/sex_match.parquet
+      md5: ca46782cafea1625099175c590d8da82
+      size: 2698
+  prime-success:
+    cmd: datazimmer run-step prime-success
+    deps:
+    - path: data/dogracebase/core/complete/dog_size.parquet
+      md5: 82b3666f33a91bdd8a40a8dd55680f26
+      size: 4557
+    - path: data/dogshowbase/core/highest_comps/competition.parquet
+      md5: 79090a4f7a0fcbf349ec38724a7d1858
+      size: 9442
+    - path: data/dogshowbase/core/highest_comps/dog
+      md5: 137528e7e003374456fc97d22a9ddd59.dir
+      size: 8310
+      nfiles: 2
+    - path: src/success.py
+      md5: d7692cfefd858f398554225870247157
+      size: 2920
+    params:
+      zimmer.yaml:
+        envs.prime.params.success.top_status_multiplier: 10
+    outs:
+    - path: data/dogsuccess/success/prime/sized_dog.parquet
+      md5: 53f50a353acbf43c5b8cfbc3d96e7c36
+      size: 2216
+    - path: data/dogsuccess/success/prime/status.parquet
+      md5: 2c83c1a0a5c7aa52c15c8935adacc135
+      size: 2940
+    - path: reports/prime/status_table.md
+      md5: e173a43c007ed6e97ffde9baf5a877bc
+      size: 275
+  prime-counts:
+    cmd: datazimmer run-step prime-counts
+    deps:
+    - path: data/dogsuccess/success/prime/sized_dog.parquet
+      md5: 53f50a353acbf43c5b8cfbc3d96e7c36
+      size: 2216
+    - path: data/dogsuccess/success/prime/status.parquet
+      md5: 2c83c1a0a5c7aa52c15c8935adacc135
+      size: 2940
+    - path: src/counts/proc.py
+      md5: 3d6d5de55c8ff45def5d433210f9f57c
+      size: 1204
+    outs:
+    - path: data/dogsuccess/counts/prime/size_count.parquet
+      md5: 6480ceddcd3a5e94bf51e6698dc322f7
+      size: 2307
+    - path: data/dogsuccess/counts/prime/status_count.parquet
+      md5: 7176425780ead9991cd5ab41c756acb6
+      size: 2358
+  prime-top_report:
+    cmd: datazimmer run-step prime-top_report
+    deps:
+    - path: data/dogsuccess/counts/prime/size_count.parquet
+      md5: 6480ceddcd3a5e94bf51e6698dc322f7
+      size: 2307
+    - path: data/dogsuccess/sex_matches/prime/sex_match.parquet
+      md5: e9d079a5a1d81ed168551b17bcbd1b9c
+      size: 2698
+    - path: src/top_report.py
+      md5: 6f26a906f4d915a3ccb9eee29853d931
+      size: 856
+    params:
+      zimmer.yaml:
+        envs.prime.params.top_report.show_top: 3
+    outs:
+    - path: reports/prime/tops.md
+      md5: 898c81984937693d8270dc2f74108fb6
+      size: 397
+  bigger-top_report:
+    cmd: datazimmer run-step bigger-top_report
+    deps:
+    - path: data/dogsuccess/counts/bigger/size_count.parquet
+      md5: 60bd71a5d821d9e1580ca5a0dee25bd8
+      size: 2302
+    - path: data/dogsuccess/sex_matches/bigger/sex_match.parquet
+      md5: ca46782cafea1625099175c590d8da82
+      size: 2698
+    - path: src/top_report.py
+      md5: 6f26a906f4d915a3ccb9eee29853d931
+      size: 856
+    params:
+      zimmer.yaml:
+        envs.bigger.params.top_report.show_top: 5
+    outs:
+    - path: reports/bigger/tops.md
+      md5: d87dc612625efa4f7d0d2013cf9a2126
+      size: 522

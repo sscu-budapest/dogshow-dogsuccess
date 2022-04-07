@@ -1,0 +1,89 @@
+stages:
+  prime-success:
+    cmd: datazimmer run-step prime-success
+    deps:
+    - data/dogracebase/core/complete/dog_size.parquet
+    - data/dogshowbase/core/highest_comps/competition.parquet
+    - data/dogshowbase/core/highest_comps/dog
+    - src/success.py
+    params:
+    - zimmer.yaml:
+      - envs.prime.params.success.top_status_multiplier
+    outs:
+    - data/dogsuccess/success/prime/sized_dog.parquet
+    - data/dogsuccess/success/prime/status.parquet
+    - reports/prime/status_table.md:
+        cache: false
+  bigger-success:
+    cmd: datazimmer run-step bigger-success
+    deps:
+    - data/dogracebase/core/complete/dog_size.parquet
+    - data/dogshowbase/core/complete/competition.parquet
+    - data/dogshowbase/core/complete/dog
+    - src/success.py
+    params:
+    - zimmer.yaml:
+      - envs.prime.params.success.top_status_multiplier
+    outs:
+    - data/dogsuccess/success/bigger/sized_dog.parquet
+    - data/dogsuccess/success/bigger/status.parquet
+    - reports/bigger/status_table.md:
+        cache: false
+  prime-counts:
+    cmd: datazimmer run-step prime-counts
+    deps:
+    - data/dogsuccess/success/prime/sized_dog.parquet
+    - data/dogsuccess/success/prime/status.parquet
+    - src/counts/proc.py
+    outs:
+    - data/dogsuccess/counts/prime/size_count.parquet
+    - data/dogsuccess/counts/prime/status_count.parquet
+  bigger-counts:
+    cmd: datazimmer run-step bigger-counts
+    deps:
+    - data/dogsuccess/success/bigger/sized_dog.parquet
+    - data/dogsuccess/success/bigger/status.parquet
+    - src/counts/proc.py
+    outs:
+    - data/dogsuccess/counts/bigger/size_count.parquet
+    - data/dogsuccess/counts/bigger/status_count.parquet
+  prime-sex_matches:
+    cmd: datazimmer run-step prime-sex_matches
+    deps:
+    - data/dogshowbase/core/highest_comps/dog
+    - data/dogshowbase/core/highest_comps/spot.parquet
+    - src/sex_matches.py
+    outs:
+    - data/dogsuccess/sex_matches/prime/sex_match.parquet
+  bigger-sex_matches:
+    cmd: datazimmer run-step bigger-sex_matches
+    deps:
+    - data/dogshowbase/core/complete/dog
+    - data/dogshowbase/core/complete/spot.parquet
+    - src/sex_matches.py
+    outs:
+    - data/dogsuccess/sex_matches/bigger/sex_match.parquet
+  prime-top_report:
+    cmd: datazimmer run-step prime-top_report
+    deps:
+    - data/dogsuccess/counts/prime/size_count.parquet
+    - data/dogsuccess/sex_matches/prime/sex_match.parquet
+    - src/top_report.py
+    params:
+    - zimmer.yaml:
+      - envs.prime.params.top_report.show_top
+    outs:
+    - reports/prime/tops.md:
+        cache: false
+  bigger-top_report:
+    cmd: datazimmer run-step bigger-top_report
+    deps:
+    - data/dogsuccess/counts/bigger/size_count.parquet
+    - data/dogsuccess/sex_matches/bigger/sex_match.parquet
+    - src/top_report.py
+    params:
+    - zimmer.yaml:
+      - envs.bigger.params.top_report.show_top
+    outs:
+    - reports/bigger/tops.md:
+        cache: false
