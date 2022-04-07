@@ -1,0 +1,13 @@
+md5: be74338e2684795376ba8e3c688a0f8d
+frozen: true
+deps:
+- path: data/dogshowbase/core/highest_comps
+  repo:
+    url: https://github.com/sscu-budapest/dogshow-dogshowbase
+    rev: zimmer-v0/0.0/2022.4.7.1/highest_comps
+    rev_lock: a13d999972414604d8d8488e5a10815dd5877d13
+outs:
+- md5: f6a1d04e2f09bd28863d8f84067b98a2.dir
+  size: 34152
+  nfiles: 7
+  path: highest_comps

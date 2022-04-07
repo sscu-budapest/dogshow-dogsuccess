@@ -1,0 +1,13 @@
+md5: 7b12fa6bb6bbd1468e7e45cc464163df
+frozen: true
+deps:
+- path: data/dogracebase/core/complete
+  repo:
+    url: https://github.com/sscu-budapest/dogshow-dogracebase
+    rev: zimmer-v0/0.0/2022.4.7.1/complete
+    rev_lock: a7496a1ddb3533ff3a3edc7f05d0405db009725f
+outs:
+- md5: 99c44e25bf857bccbbce61d4af14ba2e.dir
+  size: 65705
+  nfiles: 16
+  path: complete
